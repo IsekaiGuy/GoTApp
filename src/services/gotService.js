@@ -9,6 +9,26 @@ const _transformCharacter = (char) => {
     }
 }
 
+const _transformHouse = (house) => {
+    return {
+        name: house.name === "" ? "n/a" : house.name,
+        region: house.region === "" ? "n/a" : house.region,
+        words: house.words === "" ? "n/a" : house.words,
+        titles: house.titles === "" ? "n/a" : house.titles,
+        culture: house.culture === "" ? "n/a" : house.culture,
+        ancestralWeapons: house.ancestralWeapons === "" ? "n/a" : house.ancestralWeapons
+    }
+}
+
+const _transformBook = (book) => {
+    return {
+        name: book.name === "" ? "n/a" : book.name,
+        numberOfPages: book.numberOfPages === "" ? "n/a" : book.numberOfPages,
+        publiser: book.publiser === "" ? "n/a" : book.publiser,
+        released: book.released === "" ? "n/a" : book.released
+    }
+}
+
 const getResource = async (url) => {
     const res = await fetch(`${_apiBase}${url}`);
 
@@ -29,18 +49,22 @@ export const getCharacter = async (id) => {
     return _transformCharacter(character);
 }
 
-export const getAllBooks = () => {
-    return getResource("/books?page=5");
+export const getAllBooks = async () => {
+    const res = await getResource("/books?page=5");
+    res.map(_transformBook);
 }
 
-export const getBook = (id) => {
-    return getResource(`/books/${id}`);
+export const getBook = async (id) => {
+    const book = await getResource(`/books/${id}`);
+    return _transformBook(book);
 }
 
-export const getAllHouses = () => {
-    return getResource("/houses?page=5");
+export const getAllHouses = async () => {
+    const res = await getResource("/houses?page=5");
+    res.map(_transformHouse);
 }
 
-export const getHouse = (id) => {
-    return getResource(`/houses/${id}`);
+export const getHouse = async (id) => {
+    const house = await getResource(`/houses/${id}`);
+    return _transformHouse(house);
 }

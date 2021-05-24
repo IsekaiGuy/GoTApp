@@ -4,11 +4,7 @@ import { getCharacter } from "../../services/gotService";
 
 const RandomChar = () => {
     const [state, setState] = useState({
-        name: null,
-        gender: null,
-        born: null,
-        died: null,
-        culture: null
+        char: {}
     });
 
 const char = () => {
