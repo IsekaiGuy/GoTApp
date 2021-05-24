@@ -1,4 +1,13 @@
 const _apiBase = "https://anapioficeandfire.com/api";
+const _transformCharacter = (char) => {
+    return {
+        name: char.name === "" ? "n/a" : char.name,
+        gender: char.gender === "" ? "n/a" : char.gender,
+        born: char.born === "" ? "n/a" : char.born,
+        died: char.died === "" ? "n/a" : char.died,
+        culture: char.culture === "" ? "n/a" : char.culture
+    }
+}
 
 const getResource = async (url) => {
     const res = await fetch(`${_apiBase}${url}`);
@@ -10,12 +19,14 @@ const getResource = async (url) => {
     return await res.json();
 }
 
-export const getAllCharacters = () => {
-    return getResource("/characters?page=5");
+export const getAllCharacters = async () => {
+    const res = await getResource("/characters?page=5");
+    res.map(_transformCharacter);
 }
 
-export const getCharacter = (id) => {
-    return getResource(`/characters/${id}`);
+export const getCharacter = async (id) => {
+    const character = await getResource(`/characters/${id}`);
+    return _transformCharacter(character);
 }
 
 export const getAllBooks = () => {

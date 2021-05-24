@@ -11,22 +11,24 @@ const RandomChar = () => {
         culture: null
     });
 
-useEffect(() => {
+const char = () => {
     const id = Math.floor(Math.random() * 300) + 1;
-
-    setTimeout(() => {
         getCharacter(id)
         .then((char) => {
-        setState({
-            name: char.name === "" ? "n/a" : char.name,
-            gender: char.gender === "" ? "n/a" : char.gender,
-            born: char.born === "" ? "n/a" : char.born,
-            died: char.died === "" ? "n/a" : char.died,
-            culture: char.culture === "" ? "n/a" : char.culture
-        });
+        setState(char);
     });
+}
+
+useEffect(() => {
+    char();
+}, []);
+
+useEffect(() => {
+    setTimeout(() => {
+        char();
     }, 5000);
-});
+
+}, [state]);
 
     const {name, gender, born, died, culture} = state;
 
