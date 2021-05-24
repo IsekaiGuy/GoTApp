@@ -1,30 +1,35 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './itemList.css';
-import { getAllCharacters } from "../../services/gotService";
 
 const ItemList = (props) => {
-    const [character, setCharacter] = useState([]);
+    const [itemList, setItemList] = useState([]);
+    const {renderItem} = props;
 
     useEffect(() => {
-        getAllCharacters()
-        .then(res => setCharacter(res))
-        .catch(error => {throw new Error("We have a problem:" + error)});
+        const { getData } = props;
+
+        getData()
+            .then(res => setItemList(res))
+            .catch(error => { throw new Error("We have a problem:" + error) });
     }, []);
 
-const renderItems = () => {
-   return character.map((res, index) => (<li 
-                                        key={index} 
-                                        className="list-group-item"
-                                        onClick={() => props.onCharSelected(index)}>
-                                            {res.name}
-                                        </li>));
-}
+    const renderItems = () => {
+        return itemList.map((item, index) => {
+        const label = renderItem(item);
 
-        return (
-            <ul className="item-list list-group">
-                {renderItems()}
-            </ul>
-        );
+        return (<li
+            key={index}
+            className="list-group-item"
+            onClick={() => props.onCharSelected(41 + index)}>
+            {label}
+        </li>)});
     }
 
-    export default ItemList;
+    return (
+        <ul className="item-list list-group">
+            {renderItems()}
+        </ul>
+    );
+}
+
+export default ItemList;

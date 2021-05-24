@@ -50,7 +50,7 @@ export const getCharacter = async (id) => {
 }
 
 export const getAllBooks = async () => {
-    const res = await getResource("/books?page=5");
+    const res = await getResource("/books?page=1");
     return res.map(_transformBook);
 }
 
