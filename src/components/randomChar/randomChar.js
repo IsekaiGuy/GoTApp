@@ -4,15 +4,15 @@ import { getCharacter } from "../../services/gotService";
 
 const RandomChar = () => {
     const [state, setState] = useState({
-        char: {}
+        char: {},
+        error: null
     });
 
 const char = () => {
     const id = Math.floor(Math.random() * 300) + 1;
         getCharacter(id)
-        .then((char) => {
-        setState(char);
-    });
+        .then((char) => {setState(char)})
+        .catch((error) => setState({error: error}));
 }
 
 useEffect(() => {
@@ -30,7 +30,7 @@ useEffect(() => {
 
         return (
             <div className="random-block rounded">
-                <h4>Random Character: {name}</h4>
+                {state.error ? <h4>"SOMETHING WENT WRONG"</h4> : <h4>Random Character: {name}</h4>}
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between">
                         <span className="term">Gender </span>
