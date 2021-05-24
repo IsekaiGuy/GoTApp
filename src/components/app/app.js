@@ -7,8 +7,17 @@ import CharDetails from '../charDetails/charDetails';
 
 const App = () => {
     const [state, setState] = useState(true);
+    const [selectedChar, setSelectedChar] = useState(null);
+    
     const Toggle = () => {
         setState(!state);
+    }
+
+    const char = state ? <RandomChar /> : null;
+
+    const onCharSelected = (id) => {
+        setSelectedChar(id);
+        console.log(selectedChar);
     }
 
     return (
@@ -19,16 +28,16 @@ const App = () => {
             <Container>
                 <Row>
                     <Col lg={{size: 5, offset: 0}}>
-                        {state ? <RandomChar /> : null}
+                        {char}
                         <Button onClick={Toggle} block size="lg" color="primary" style={{margin: "-20px 0 20px 0"}}>Enable/Disable</Button>
                     </Col>
                 </Row>
                 <Row>
                     <Col md='6'>
-                        <ItemList />
+                        <ItemList onCharSelected={onCharSelected}/>
                     </Col>
                     <Col md='6'>
-                        <CharDetails />
+                        <CharDetails charId={selectedChar}/>
                     </Col>
                 </Row>
             </Container>
@@ -37,3 +46,5 @@ const App = () => {
 };
 
 export default App;
+
+// git push -f https://github.com/IsekaiGuy/GoTApp.git master

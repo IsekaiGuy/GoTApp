@@ -41,7 +41,7 @@ const getResource = async (url) => {
 
 export const getAllCharacters = async () => {
     const res = await getResource("/characters?page=5");
-    res.map(_transformCharacter);
+    return res.map(_transformCharacter);
 }
 
 export const getCharacter = async (id) => {
@@ -51,7 +51,7 @@ export const getCharacter = async (id) => {
 
 export const getAllBooks = async () => {
     const res = await getResource("/books?page=5");
-    res.map(_transformBook);
+    return res.map(_transformBook);
 }
 
 export const getBook = async (id) => {
@@ -61,7 +61,7 @@ export const getBook = async (id) => {
 
 export const getAllHouses = async () => {
     const res = await getResource("/houses?page=5");
-    res.map(_transformHouse);
+    return res.map(_transformHouse);
 }
 
 export const getHouse = async (id) => {

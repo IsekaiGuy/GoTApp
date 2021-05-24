@@ -1,23 +1,28 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './itemList.css';
-// import useGotService from "../../services/gotService";
+import { getAllCharacters } from "../../services/gotService";
 
+const ItemList = (props) => {
+    const [character, setCharacter] = useState([]);
 
-const ItemList = () => {
-    // const getItemList = useGotService("/characters?page=5");
-    // getItemList.then(res => console.log(res));
+    useEffect(() => {
+        getAllCharacters()
+        .then(res => setCharacter(res))
+        .catch(error => {throw new Error("We have a problem:" + error)});
+    }, []);
+
+const renderItems = () => {
+   return character.map((res, index) => (<li 
+                                        key={index} 
+                                        className="list-group-item"
+                                        onClick={() => props.onCharSelected(index)}>
+                                            {res.name}
+                                        </li>));
+}
 
         return (
             <ul className="item-list list-group">
-                <li className="list-group-item">
-                    John Snow
-                </li>
-                <li className="list-group-item">
-                    Brandon Stark
-                </li>
-                <li className="list-group-item">
-                    Geremy
-                </li>
+                {renderItems()}
             </ul>
         );
     }

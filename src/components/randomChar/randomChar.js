@@ -20,10 +20,11 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-    setTimeout(() => {
+    const timerid = setTimeout(() => {
         char();
     }, 5000);
 
+return () => clearTimeout(timerid);
 }, [state]);
 
     const {name, gender, born, died, culture} = state;
