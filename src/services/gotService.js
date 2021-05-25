@@ -14,9 +14,9 @@ const _transformHouse = (house) => {
         name: house.name === "" ? "n/a" : house.name,
         region: house.region === "" ? "n/a" : house.region,
         words: house.words === "" ? "n/a" : house.words,
-        titles: house.titles === "" ? "n/a" : house.titles,
-        culture: house.culture === "" ? "n/a" : house.culture,
-        ancestralWeapons: house.ancestralWeapons === "" ? "n/a" : house.ancestralWeapons
+        titles: house.titles[0] === "" ? "n/a" : house.titles,
+        culture: house.culture === "" || [] ? "n/a" : house.culture,
+        coatOfArms: house.coatOfArms === "" ? "n/a" : house.coatOfArms
     }
 }
 
@@ -24,7 +24,7 @@ const _transformBook = (book) => {
     return {
         name: book.name === "" ? "n/a" : book.name,
         numberOfPages: book.numberOfPages === "" ? "n/a" : book.numberOfPages,
-        publiser: book.publiser === "" ? "n/a" : book.publiser,
+        publisher: book.publisher === "" ? "n/a" : book.publisher,
         released: book.released === "" ? "n/a" : book.released
     }
 }

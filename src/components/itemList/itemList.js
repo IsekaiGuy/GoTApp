@@ -20,7 +20,7 @@ const ItemList = (props) => {
         return (<li
             key={index}
             className="list-group-item"
-            onClick={() => props.onCharSelected(41 + index)}>
+            onClick={() => props.onItemSelected(index)}>
             {label}
         </li>)});
     }

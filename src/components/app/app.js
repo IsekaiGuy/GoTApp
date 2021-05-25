@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState, StrictMode } from 'react';
 import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header/header';
 import RandomChar from '../randomChar/randomChar';
-import CharacterPage from "../characterPage/characterPage";
-import ItemList from '../itemList/itemList';
-import CharDetails from '../charDetails/charDetails';
+import CharacterPage from "../../pages/characterPage/characterPage";
+import BooksPage from "../../pages/booksPage/booksPage";
+import HousesPage from "../../pages/housesPage/housesPage";
 import { ErrorBoundary } from 'react-error-boundary';
-import { getAllBooks, getAllHouses } from "../../services/gotService";
 
+
+///ERROR CATCH
 function ErrorFallback({ error, resetErrorBoundary }) {
     return (
         <div style={{ color: "white" }} className="container">
@@ -19,15 +20,12 @@ function ErrorFallback({ error, resetErrorBoundary }) {
         </div>
     )
 }
+//////
 
+//////////APP
 const App = () => {
     const [state, setState] = useState(true);
-    const [selectedChar, setSelectedChar] = useState(null);
 
-    const onCharSelected = (id) => {
-          setSelectedChar(id);
-    }
-    
     const Toggle = () => {
         setState(!state);
     }
@@ -35,7 +33,7 @@ const App = () => {
     const char = state ? <RandomChar /> : null;
 
     return (
-        <useStrict>
+        <StrictMode>
             <Container>
                 <Header />
             </Container>
@@ -50,29 +48,15 @@ const App = () => {
                     <CharacterPage />
                 </ErrorBoundary>
 
-                <Col md='6'>
-                    <ItemList 
-                    onCharSelected={onCharSelected} 
-                    getData={getAllBooks}
-                    renderItem={({name}) => `${name}`}
-                    />
-                </Col>
-                <Col md='6'>
-                    <CharDetails charId={selectedChar} />
-                </Col>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <BooksPage />
+                </ErrorBoundary>
 
-                <Col md='6'>
-                    <ItemList 
-                    onCharSelected={onCharSelected} 
-                    getData={getAllHouses}
-                    renderItem={({name}) => `${name}`}
-                    />
-                </Col>
-                <Col md='6'>
-                    <CharDetails charId={selectedChar} />
-                </Col>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <HousesPage />
+                </ErrorBoundary>
             </Container>
-        </useStrict>
+        </StrictMode>
     );
 };
 
