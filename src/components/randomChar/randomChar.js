@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './randomChar.css';
 import { getCharacter } from "../../services/gotService";
 
-const RandomChar = () => {
+const RandomChar = (props) => {
     const [state, setState] = useState({
         char: {},
         error: null
@@ -22,10 +22,10 @@ useEffect(() => {
 useEffect(() => {
     const timerid = setTimeout(() => {
         char();
-    }, 5000);
+    }, props.timeout);
 
 return () => clearTimeout(timerid);
-}, [state]);
+}, [state, props.timeout]);
 
     const {name, gender, born, died, culture} = state;
 
@@ -56,3 +56,7 @@ return () => clearTimeout(timerid);
 }
 
 export default RandomChar;
+
+RandomChar.defaultProps = {
+    timeout: 15000
+}
